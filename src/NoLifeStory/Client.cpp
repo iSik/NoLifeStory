@@ -25,7 +25,7 @@ void NLS::Init(const vector<ustring>& args) {
 	Time.Reset();
 	InitWZ(args.size()>1?args[1]:"");
 	Time.Step();
-	Graphics::Init();
+	Graphics::Init(false);
 	Physics::Init();
 #ifdef NLS_WINDOWS
 	BASS_Init(-1, 44100, 0, window->GetSystemHandle(), 0);
@@ -34,6 +34,7 @@ void NLS::Init(const vector<ustring>& args) {
 #endif
 	KeySet(sf::Keyboard::Escape, Func(window->Close));
 	KeySet(sf::Keyboard::F, Func(ThisPlayer.MouseFly));
+	KeySet(sf::Keyboard::Return, Func(Graphics::setFullScreen));
 	ucout << U("Initialization complete") << endl;
 	Map::Load("100000000", "");
 	Map::Load();

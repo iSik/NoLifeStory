@@ -7,9 +7,10 @@
 sf::Window* NLS::window = 0;
 bool NLS::Graphics::NPOT = true;
 bool NLS::Graphics::Shit = false;
+bool NLS::Graphics::fullScreen = true;
 
-void NLS::Graphics::Init() {
-	window = new sf::Window(sf::VideoMode(800, 600), "NoLifeStory::Loading", sf::Style::Titlebar, sf::ContextSettings(0, 0, 0, 2, 0));
+void NLS::Graphics::Init(bool full) {
+	window = new sf::Window(sf::VideoMode(800, 600), "NoLifeStory::Loading", full ? sf::Style::Fullscreen : sf::Style::Titlebar, sf::ContextSettings(0, 0, 0, 2, 0));
 	glewExperimental = true;
 	GLenum error = glewInit();
 	switch (error) {
@@ -63,6 +64,14 @@ void NLS::Graphics::Init() {
 		NPOT = false;
 	}
 }
+
+void NLS::Graphics::setFullScreen() {
+	if (fullScreen == true) fullScreen = false;
+	else fullScreen = true;
+	window->Close();
+	Init(fullScreen);
+}
+
 
 void NLS::Graphics::Draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
